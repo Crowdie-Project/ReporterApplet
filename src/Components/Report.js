@@ -6,9 +6,6 @@
 import React from 'react';
 import {View, Text,TextInput, StyleSheet} from 'react-native';
 
-//DOTENV
-require('dotenv').config();
-
 //SUPABASE IMPORTS
 import { createClient } from '@supabase/supabase-js'
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
@@ -16,10 +13,11 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 //////////////////
 //MAIN
 //////////////////
+
 const Report = () => {
     return (
        
-            <View styşe={styles.reportWrapper}>
+            <View style={styles.reportWrapper}>
                 
                 <Text style={styles.header}>Reporter Applet</Text>
                 
@@ -30,7 +28,6 @@ const Report = () => {
                 
                 <Button title="submit" style={styles.btn} color="#662EDD"></Button>
             </View>
-     
     );
 };
 

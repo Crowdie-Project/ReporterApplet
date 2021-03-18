@@ -1,12 +1,24 @@
+//By the CrowdChain Team, 2021
+
+//IMPORTS
 import React from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 // import Report from './Components/Report';
+
+//ENVIRONMENT
+import env from './config/env';
+//console.log(env);
+//console.log("__DEV__ ?",__DEV__);
+
+//env contains env.SUPABASE_URL, env.SUPABASE_KEY
+
+//MAIN
 
 export default function App() {
 
   return (
     <View style={styles.container}>
-        <View styşe={styles.reportWrapper}>
+        <View style={styles.reportWrapper}>
          
          <Text style={styles.header}>Reporter Applet</Text>
           
