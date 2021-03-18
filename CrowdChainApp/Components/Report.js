@@ -1,7 +1,21 @@
+//By the CrowdChain Team, 2021
+
+//IMPORTS AND REQUIRES
+
+//REACT IMPORTS
 import React from 'react';
 import {View, Text,TextInput, StyleSheet} from 'react-native';
 
+//DOTENV
+require('dotenv').config();
 
+//SUPABASE IMPORTS
+import { createClient } from '@supabase/supabase-js'
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+
+//////////////////
+//MAIN
+//////////////////
 const Report = () => {
     return (
        
