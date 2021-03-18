@@ -3,7 +3,7 @@
 //IMPORTS AND REQUIRES
 
 //REACT IMPORTS
-import React, { useRef, useState} from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import {View, Text,TextInput, Button, StyleSheet} from 'react-native';
 
 //SUPABASE IMPORTS
@@ -25,6 +25,24 @@ const Report = () => {
   const reporterRef = useRef();
   const [errorText, setError] = useState("");
 
+
+  useEffect(() => {
+  
+    // let url = window.location.hash;
+    // let query = url.substr(1);
+    // let result = {};
+
+    // query.split("&").forEach((part) => {
+    //     const item = part.split("=");
+    //     result[item[0]] = decodeURIComponent(item[1]);
+    // });
+
+    // if (result.type === "recovery") {
+    //     setRecoveryToken(result.access_token);
+    // }
+
+    fetchReports().catch(console.error);
+}, []);
 
   const fetchReports = async () => {
     let { data: reports, error } = await supabase
@@ -63,7 +81,7 @@ const Report = () => {
   
 
     return (
-       
+       <View style={styles.container}>
             <View style={styles.reportWrapper}>
                 
                 <Text style={styles.header}>Reporter Applet</Text>
@@ -75,18 +93,47 @@ const Report = () => {
                 
                 <Button title="submit" onPress={addReport} style={styles.btn} color="#662EDD"></Button>
             </View>
+            <View style={styles.reportWrapper}>
+                
+                <Text style={styles.header}>Reported Events</Text>
+                
+                {reports.length ? (
+                        reports.map((report) => (
+                            <Text style={styles.reports}>code: {report.CODE} lat: {report.LAT} lon: {report.LON}</Text>
+                        ))
+                    ) : (
+                        <span
+                            className=
+                                "h-full flex justify-center items-center"
+                        >
+                            You do have any reported events yet!
+                        </span>
+                    )}
+              
+                
+               
+            </View>
+      </View>
     );
 };
 
 const styles = StyleSheet.create({
+  container: {
+       justifyContent: "space-evenly",
+       flexDirection: "row"
+  },
   reportWrapper: {
     flex:1,
-    padding: 50
+    padding: 50,
+    width: 400
   },
   header: {
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 20
+  },
+  reports: {
+    fontSize: 14
   },
   input: {
     marginBottom: 20,
