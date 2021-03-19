@@ -12,11 +12,21 @@ const supabaseUrl = 'https://kivuanxiochrllqnepvh.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxNTEyNDUzNCwiZXhwIjoxOTMwNzAwNTM0fQ.ETthLWIqTxoJsihnOrAYgCeFL0kkMd5v9-sEFmJ_kNA'
 const supabase = createClient(supabaseUrl, supabaseKey)
 
+//MODULE IMPORTS
+import Navig from "../Nav";
+
 //////////////////
 //MAIN
 //////////////////
 
 const Report = () => {
+
+  
+  //Navig instance for geolocation
+  const navig = new Navig();
+  //Geolocation array => [longitude, latitude, timestamp]
+  const geoLoc = navig.getLocation();                                                 //Location doesn't update until user clicks to allow location services button
+
 
   const [reports, setReports] = useState([]);
   const codeRef = useRef();
