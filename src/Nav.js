@@ -2,56 +2,31 @@ import React, { Component } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 
+class Navig extends Component {
 
-module.exports = class Nav {
+  constructor() {
+    super();
+  }
+  //need to check it again before submitting report to ensure user is where they tell they are
+  getLocation() {
+    let locArr = [];
+      navigator.geolocation.getCurrentPosition(
+         position => {
+          locArr.push(position.coords.longitude);
+          locArr.push(position.coords.latitude);
+          locArr.push(position.timestamp);
+          console.log("Longitude is :", locArr[0]);
+          console.log("Latitude is :", locArr[1]);
+          console.log("Whole geolocation data:", position);
+       });  
+    return locArr;
+  }
+}
 
-    constructor() {
-      this.long = -1;
-      this.latt = -1;
-      this.permStat = false;
-    }
-
-    
-    getLong() {
-      return this.long;
-    }
-    setLong(coord) {
-      this.long = coord;
-    }
-
-    getLatt() {
-      return this.latt;
-    }
-    setLatt(coord) {
-      this.latt = coord;
-    }
-
-
-    getLocation = () => {
-      let locArr = [];
-        navigator.geolocation.getCurrentPosition(
-            position => {
-              this.setLong(position.coords.longitude);
-              this.setLatt(position.coords.latitude);
-              console.log("Latitude is :", this.getLatt());
-              console.log("Longitude is :", this.getLong());
-              console.log("Whole geolocation data:", position);
-            });  
-    }
-
+export default Navig;
     
     //navigator.permissions.query({name:'geolocation'}).then(function(result) {
     //Will return ['granted', 'prompt', 'denied']
     // console.log(result.state);
     //});
     
-   showLocs() {
-    console.log("Latitude is :", this.getLatt());
-    console.log("Longitude is :", this.getLong());
-   }
-
-    setPermStat() {
-        this.permStat = true;
-        console.log("Geolocation permission:", b);
-    }
-} 
