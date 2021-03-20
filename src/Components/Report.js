@@ -7,13 +7,14 @@ import React, { useEffect, useRef, useState} from 'react';
 import {View, Text,TextInput, Button, StyleSheet, requireNativeComponent, TouchableNativeFeedback} from 'react-native';
 
 //SUPABASE IMPORTS
-import { createClient } from '@supabase/supabase-js'
-const supabaseUrl = 'https://kivuanxiochrllqnepvh.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxNTEyNDUzNCwiZXhwIjoxOTMwNzAwNTM0fQ.ETthLWIqTxoJsihnOrAYgCeFL0kkMd5v9-sEFmJ_kNA'
-const supabase = createClient(supabaseUrl, supabaseKey)
+//import { createClient } from '@supabase/supabase-js';
+
+//const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_KEY);
+import {supabase} from './Supabase.js';
 
 //MODULE IMPORTS
 import Navig from "../Nav";
+
 
 //////////////////
 //MAIN
@@ -33,8 +34,8 @@ const Report = () => {
   const codeRef = useRef();
   const latRef = useRef();
   const lonRef = useRef();
-  const reporterRef = useRef();
-  const [errorText, setError] = useState("");
+  //const reporterRef = useRef();
+  //const [errorText, setError] = useState("");
 
 
   useEffect(() => {
@@ -113,12 +114,12 @@ const Report = () => {
                             <Text style={styles.reports}>code: {report.CODE} lat: {report.LAT} lon: {report.LON}</Text>
                         ))
                     ) : (
-                        <span
+                        <Text
                             className=
                                 "h-full flex justify-center items-center"
                         >
                             You do have any reported events yet!
-                        </span>
+                        </Text>
                     )}
               
                 
