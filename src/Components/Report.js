@@ -4,7 +4,7 @@
 
 //REACT IMPORTS
 import React, { useEffect, useState, useRef} from 'react';
-import {View, Text,TextInput, Button, StyleSheet, ScrollView} from 'react-native';
+import {View, Text,TextInput, Button, StyleSheet, ScrollView, Alert, Modal, Pressable} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 //SUPABASE IMPORTS
 //import { createClient } from '@supabase/supabase-js';
@@ -21,7 +21,7 @@ import Navig from "../Nav";
 //////////////////
 
 const Report = () => {
-
+  const [modalVisible, setModalVisible] = useState(false);
   
   //Navig instance for geolocation
   const navig = new Navig();
@@ -93,7 +93,25 @@ const Report = () => {
   
 
     return (
-       <View style={styles.container}>
+      <View style={styles.centeredView}> 
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+      <View style={styles.centeredView}>
+      <View style={styles.modalContainer}>
+    
+        <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>X</Text>
+         </Pressable> 
+      <View style={styles.container}>
             <View style={styles.reportWrapper}>
                 
                 <Text style={styles.header}>Reporter Applet</Text>
@@ -132,23 +150,53 @@ const Report = () => {
               
 
                 </ScrollView>
-                
-                
-               
-            </View>
+
+          </View>
       </View>
+               
+      </View> 
+      </View>
+
+      </Modal>
+      <Pressable
+        style={[styles.button, styles.buttonOpen]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.textStyle}>Report</Text>
+      </Pressable>
+      </View>
+     
     );
 };
 
 const styles = StyleSheet.create({
   container: {
        justifyContent: "space-evenly",
-       flexDirection: "row"
+       flexDirection: "row",
+  },
+  modalContainer:{
+    flexDirection: "column",
+    backgroundColor: "#DEDEDE",
+    width: "fit-content",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   },
   reportWrapper: {
-    flex:1,
-    padding: 50,
-    width: 400
+    padding: 50
   },
   scrollview: {
     height: 250
@@ -175,9 +223,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     backgroundColor: '#EDEDED'
   },
-  btn: {
-      
-    }
+  button: {
+    padding: 10,
+    width: "fit-content",
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#616161",
+  },
+  buttonClose: {
+    backgroundColor: "#616161",
+    alignSelf: "flex-end"
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
   });
 
 export default Report;
