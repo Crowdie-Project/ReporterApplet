@@ -1,1 +1,2 @@
 # ReporterApplet
+Discord Link (TBA)
