@@ -8,7 +8,7 @@ import {View, Text,TextInput, StyleSheet} from 'react-native';
 
 //SUPABASE IMPORTS
 import { createClient } from '@supabase/supabase-js'
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_KEY);
 
 //////////////////
 //MAIN
