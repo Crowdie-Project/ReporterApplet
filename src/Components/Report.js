@@ -5,7 +5,7 @@
 //REACT IMPORTS
 import React, { useEffect, useState, useRef} from 'react';
 import {View, Text,TextInput, Button, StyleSheet, ScrollView} from 'react-native';
-
+import {Picker} from '@react-native-picker/picker';
 //SUPABASE IMPORTS
 //import { createClient } from '@supabase/supabase-js';
 
@@ -37,7 +37,8 @@ const Report = () => {
   //const reporterRef = useRef();
   const [errorText, setError] = useState("");
 
-  
+  const [selectedEvent, setSelectedEvent] = useState();
+  const eventTypes = {"doğal afetler": "101", "yangın": "102", "sosyal anket":"103"};
 
   useEffect(() => {
   
@@ -67,8 +68,7 @@ const Report = () => {
 };
 
   const addReport = async () => {
-    let codeText = codeRef.current.value;
-    let code = codeText.trim();
+    let code = selectedEvent;
     let latText = latRef.current.value;
     let lat = latText.trim();
     let lonText = lonRef.current.value;
@@ -84,7 +84,7 @@ const Report = () => {
     else {
         setReports([report, ...reports]);
         setError(null);
-        codeRef.current.value = "";
+  
         latRef.current.value = "";
         lonRef.current.value = "";
     }
@@ -98,7 +98,15 @@ const Report = () => {
                 
                 <Text style={styles.header}>Reporter Applet</Text>
                 
-                <TextInput ref={codeRef} placeholder="Code" style={styles.input}></TextInput>
+                <Picker style={styles.picker}
+                    selectedValue={selectedEvent}
+                    onValueChange={(itemValue, itemIndex) =>
+                    setSelectedEvent(itemValue)}>
+                    {Object.entries(eventTypes).map(([key, value]) => (
+                         <Picker.Item label={key} value={value} /> 
+                    ))}
+                   
+                </Picker>
                 <TextInput ref={latRef} placeholder="Lat" style={styles.input}></TextInput>
                 <TextInput ref={lonRef} placeholder="Lon" style={styles.input}></TextInput>
                 <TextInput placeholder="Reporter" style={styles.input}></TextInput>
@@ -155,12 +163,19 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 20,
-    fontSize: 18,
+    fontSize: 16,
     height: 30,
     paddingHorizontal: 5,
-    borderWidth: 1,
+    backgroundColor: '#EDEDED'
   },
-    btn: {
+  picker: {
+    marginBottom: 20,
+    fontSize: 16,
+    height: 30,
+    paddingHorizontal: 5,
+    backgroundColor: '#EDEDED'
+  },
+  btn: {
       
     }
   });
