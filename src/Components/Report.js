@@ -3,8 +3,8 @@
 //IMPORTS AND REQUIRES
 
 //REACT IMPORTS
-import React, { useEffect, useRef, useState} from 'react';
-import {View, Text,TextInput, Button, StyleSheet, requireNativeComponent, TouchableNativeFeedback} from 'react-native';
+import React, { useEffect, useState, useRef} from 'react';
+import {View, Text,TextInput, Button, StyleSheet, ScrollView} from 'react-native';
 
 //SUPABASE IMPORTS
 //import { createClient } from '@supabase/supabase-js';
@@ -35,8 +35,9 @@ const Report = () => {
   const latRef = useRef();
   const lonRef = useRef();
   //const reporterRef = useRef();
-  //const [errorText, setError] = useState("");
+  const [errorText, setError] = useState("");
 
+  
 
   useEffect(() => {
   
@@ -77,9 +78,8 @@ const Report = () => {
    
     const { data: report, error } = await supabase
     .from('TestReports')
-    .insert([
-      { CODE: code, LAT: lat, LON: lon},
-    ])
+    .insert({ CODE: code, LAT: lat, LON: lon})
+    .single();
     if (error) setError(error.message);
     else {
         setReports([report, ...reports]);
@@ -101,27 +101,30 @@ const Report = () => {
                 <TextInput ref={codeRef} placeholder="Code" style={styles.input}></TextInput>
                 <TextInput ref={latRef} placeholder="Lat" style={styles.input}></TextInput>
                 <TextInput ref={lonRef} placeholder="Lon" style={styles.input}></TextInput>
-                <TextInput  placeholder="Reporter" style={styles.input}></TextInput>
+                <TextInput placeholder="Reporter" style={styles.input}></TextInput>
                 
                 <Button title="submit" onPress={addReport} style={styles.btn} color="#662EDD"></Button>
             </View>
             <View style={styles.reportWrapper}>
-                
-                <Text style={styles.header}>Reported Events</Text>
-                
-                {reports.length ? (
+                 <Text style={styles.header}>Reported Events</Text>
+                   <ScrollView style={styles.scrollview}>
+               
+                    
+                    {reports.length ? (
                         reports.map((report) => (
-                            <Text style={styles.reports}>code: {report.CODE} lat: {report.LAT} lon: {report.LON}</Text>
+                            <Text key={report.id} style={styles.reports}>
+                              code: {report.CODE} lat: {report.LAT} lon: {report.LON}
+                            </Text>
                         ))
                     ) : (
-                        <Text
-                            className=
-                                "h-full flex justify-center items-center"
-                        >
+                        <Text style={styles.reports}>
                             You do have any reported events yet!
                         </Text>
                     )}
               
+
+                </ScrollView>
+                
                 
                
             </View>
@@ -138,6 +141,9 @@ const styles = StyleSheet.create({
     flex:1,
     padding: 50,
     width: 400
+  },
+  scrollview: {
+    height: 250
   },
   header: {
     fontSize: 30,
