@@ -20,7 +20,7 @@ import Navig from "../Nav";
 //MAIN
 //////////////////
 
-const Report = () => {
+const Report = ({reports,setReports}) => {
   const [modalVisible, setModalVisible] = useState(false);
   
   //Navig instance for geolocation
@@ -30,8 +30,7 @@ const Report = () => {
              
 
 
-  const [reports, setReports] = useState([]);
-  const codeRef = useRef();
+ // const [reports, setReports] = useState([]);
   const latRef = useRef();
   const lonRef = useRef();
   //const reporterRef = useRef();
@@ -40,32 +39,6 @@ const Report = () => {
   const [selectedEvent, setSelectedEvent] = useState();
   const eventTypes = {"doğal afetler": "101", "yangın": "102", "sosyal anket":"103"};
 
-  useEffect(() => {
-  
-    // let url = window.location.hash;
-    // let query = url.substr(1);
-    // let result = {};
-
-    // query.split("&").forEach((part) => {
-    //     const item = part.split("=");
-    //     result[item[0]] = decodeURIComponent(item[1]);
-    // });
-
-    // if (result.type === "recovery") {
-    //     setRecoveryToken(result.access_token);
-    // }
-
-    fetchReports().catch(console.error);
-}, []);
-
-  const fetchReports = async () => {
-    let { data: reports, error } = await supabase
-        .from("TestReports")
-        .select("*")
-        .order("id", { ascending: false });
-    if (error) console.log("error", error);
-    else setReports(reports);
-};
 
   const addReport = async () => {
     let code = selectedEvent;
@@ -93,7 +66,7 @@ const Report = () => {
   
 
     return (
-      <View style={styles.centeredView}> 
+      <View style={styles.container}> 
       <Modal
         animationType="fade"
         transparent={true}
@@ -111,7 +84,7 @@ const Report = () => {
               onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.textStyle}>X</Text>
          </Pressable> 
-      <View style={styles.container}>
+      
             <View style={styles.reportWrapper}>
                 
                 <Text style={styles.header}>Reporter Applet</Text>
@@ -131,28 +104,6 @@ const Report = () => {
                 
                 <Button title="submit" onPress={addReport} style={styles.btn} color="#662EDD"></Button>
             </View>
-            <View style={styles.reportWrapper}>
-                 <Text style={styles.header}>Reported Events</Text>
-                   <ScrollView style={styles.scrollview}>
-               
-                    
-                    {reports.length ? (
-                        reports.map((report) => (
-                            <Text key={report.id} style={styles.reports}>
-                              code: {report.CODE} lat: {report.LAT} lon: {report.LON}
-                            </Text>
-                        ))
-                    ) : (
-                        <Text style={styles.reports}>
-                            You do have any reported events yet!
-                        </Text>
-                    )}
-              
-
-                </ScrollView>
-
-          </View>
-      </View>
                
       </View> 
       </View>
@@ -164,15 +115,15 @@ const Report = () => {
       >
         <Text style={styles.textStyle}>Report</Text>
       </Pressable>
-      </View>
+    </View>
      
     );
 };
 
 const styles = StyleSheet.create({
   container: {
-       justifyContent: "space-evenly",
-       flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalContainer:{
     flexDirection: "column",
@@ -193,7 +144,7 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   reportWrapper: {
     padding: 50
