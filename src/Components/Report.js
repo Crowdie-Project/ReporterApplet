@@ -7,7 +7,7 @@ import React, { useEffect, useRef, useState} from 'react';
 import {View, Text,TextInput, Button, StyleSheet} from 'react-native';
 
 //SUPABASE IMPORTS
-import { createClient } from '@supabase/supabase-js';
+//import { createClient } from '@supabase/supabase-js';
 
 //const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_KEY);
 import {supabase} from './Supabase.js';
@@ -33,8 +33,8 @@ const Report = () => {
   const codeRef = useRef();
   const latRef = useRef();
   const lonRef = useRef();
-  const reporterRef = useRef();
-  const [errorText, setError] = useState("");
+  //const reporterRef = useRef();
+  //const [errorText, setError] = useState("");
 
 
   useEffect(() => {
@@ -113,12 +113,12 @@ const Report = () => {
                             <Text style={styles.reports}>code: {report.CODE} lat: {report.LAT} lon: {report.LON}</Text>
                         ))
                     ) : (
-                        <span
+                        <Text
                             className=
                                 "h-full flex justify-center items-center"
                         >
                             You do have any reported events yet!
-                        </span>
+                        </Text>
                     )}
               
                 
