@@ -7,9 +7,10 @@ import React, { useEffect, useRef, useState} from 'react';
 import {View, Text,TextInput, Button, StyleSheet} from 'react-native';
 
 //SUPABASE IMPORTS
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_KEY);
+//const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_KEY);
+import {supabase} from './Supabase.js';
 
 //MODULE IMPORTS
 import Navig from "../Nav";

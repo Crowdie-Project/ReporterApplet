@@ -6,10 +6,9 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import Report from './Components/Report';
 
 //ENVIRONMENT
-import env from './config/env';
+//import env from './config/env';
 //console.log(env);
 //console.log("__DEV__ ?",__DEV__);
-
 //env contains env.SUPABASE_URL, env.SUPABASE_KEY
 
 //MAIN
