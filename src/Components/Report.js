@@ -4,7 +4,7 @@
 
 //REACT IMPORTS
 import React, { useEffect, useRef, useState} from 'react';
-import {View, Text,TextInput, Button, StyleSheet} from 'react-native';
+import {View, Text,TextInput, Button, StyleSheet, requireNativeComponent, TouchableNativeFeedback} from 'react-native';
 
 //SUPABASE IMPORTS
 import { createClient } from '@supabase/supabase-js'
@@ -25,7 +25,8 @@ const Report = () => {
   //Navig instance for geolocation
   const navig = new Navig();
   //Geolocation array => [longitude, latitude, timestamp]
-  const geoLoc = navig.getLocation();                                                 //Location doesn't update until user clicks to allow location services button
+  const geoLoc = navig.getLocation();                                        //Location doesn't update until user clicks to allow location services button
+             
 
 
   const [reports, setReports] = useState([]);
