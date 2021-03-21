@@ -41,26 +41,33 @@ const Report = ({reports,setReports}) => {
 
 
   const addReport = async () => {
-    let code = selectedEvent;
+   
     let latText = latRef.current.value;
     let lat = latText.trim();
     let lonText = lonRef.current.value;
     let lon = lonText.trim();
    // let reporterText = reporterRef.current.value;
    // let reporter = reporterText.trim();
-   
+
+   //if selected item is "seçiniz", user cannot submit report.
+   if (!selectedEvent){
+     return;
+   }
+
     const { data: report, error } = await supabase
     .from('TestReports')
-    .insert({ CODE: code, LAT: lat, LON: lon})
+    .insert({ CODE: selectedEvent, LAT: lat, LON: lon})
     .single();
     if (error) setError(error.message);
     else {
         setReports([report, ...reports]);
         setError(null);
   
-        latRef.current.value = "";
-        lonRef.current.value = "";
+     //   latRef.current.value = "";
+     //   lonRef.current.value = "";
     }
+    setSelectedEvent(null)
+    setModalVisible(!modalVisible)
   };
   
   
@@ -92,7 +99,9 @@ const Report = ({reports,setReports}) => {
                 <Picker style={styles.picker}
                     selectedValue={selectedEvent}
                     onValueChange={(itemValue, itemIndex) =>
-                    setSelectedEvent(itemValue)}>
+                      setSelectedEvent(itemValue)
+                    }>
+                      <Picker.Item label="Seçiniz" value="" />  
                     {Object.entries(eventTypes).map(([key, value]) => (
                          <Picker.Item label={key} value={value} /> 
                     ))}
