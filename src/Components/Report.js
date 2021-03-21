@@ -89,7 +89,8 @@ const Report = ({reports,setReports}) => {
         <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>X</Text>
+              <Text style={styles.closeButtonText}>X</Text>
+              
          </Pressable> 
       
             <View style={styles.reportWrapper}>
@@ -154,6 +155,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(100,100,100,0.75)",
   },
   reportWrapper: {
     padding: 50
@@ -192,8 +194,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#616161",
   },
   buttonClose: {
-    backgroundColor: "#616161",
-    alignSelf: "flex-end"
+    alignSelf: "flex-end",
+  },
+  closeButtonText: {
+    color: "#616161",
+    fontWeight: "bold",
+    fontSize: 20
   },
   textStyle: {
     color: "white",
