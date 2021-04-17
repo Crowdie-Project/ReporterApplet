@@ -33,6 +33,8 @@ const Report = ({reports,setReports}) => {
  // const [reports, setReports] = useState([]);
   const latRef = useRef();
   const lonRef = useRef();
+  const catRef = useRef();
+  const codeRef = useRef();
   //const reporterRef = useRef();
   const [errorText, setError] = useState("");
 
@@ -46,17 +48,17 @@ const Report = ({reports,setReports}) => {
     let lat = latText.trim();
     let lonText = lonRef.current.value;
     let lon = lonText.trim();
+    let cat = catRef.current.value;
+    let code = codeRef.current.value;
    // let reporterText = reporterRef.current.value;
    // let reporter = reporterText.trim();
 
    //if selected item is "seçiniz", user cannot submit report.
-   if (!selectedEvent){
-     return;
-   }
+ 
 
     const { data: report, error } = await supabase
     .from('TestReports')
-    .insert({ CODE: selectedEvent, LAT: lat, LON: lon})
+    .insert({ CODE: code, LAT: lat, LON: lon, CategoryCode: cat})
     .single();
     if (error) setError(error.message);
     else {
@@ -96,18 +98,8 @@ const Report = ({reports,setReports}) => {
             <View style={styles.reportWrapper}>
                 
                 <Text style={styles.header}>Reporter Applet</Text>
-                
-                <Picker style={styles.picker}
-                    selectedValue={selectedEvent}
-                    onValueChange={(itemValue, itemIndex) =>
-                      setSelectedEvent(itemValue)
-                    }>
-                      <Picker.Item label="Seçiniz" value="" />  
-                    {Object.entries(eventTypes).map(([key, value]) => (
-                         <Picker.Item label={key} value={value} /> 
-                    ))}
-                   
-                </Picker>
+                <TextInput ref={catRef} placeholder="Category" style={styles.input}></TextInput>
+                <TextInput ref={codeRef} placeholder="Code" style={styles.input}></TextInput>
                 <TextInput ref={latRef} placeholder="Lat" style={styles.input}></TextInput>
                 <TextInput ref={lonRef} placeholder="Lon" style={styles.input}></TextInput>
                 <TextInput placeholder="Reporter" style={styles.input}></TextInput>
